@@ -1,0 +1,105 @@
+teacher: ../ckpt/model.pt
+pretrained: ../ckpt/model.pt
+load_only_encoder: False
+long_context: False
+fixed_length: True
+resume: Null
+benchmark: False
+num_views : 10
+num_test_views : 4
+n_corres_train: 0
+n_corres_test: 0
+
+train_criterion: DistillLoss()
+test_criterion: DistillLoss()
+allow_repeat: False
+
+dataset1: Co3d_Multi(allow_repeat=${allow_repeat}, split='train', ROOT='../data/train/processed_co3d/', 
+  aug_crop=16, resolution=[(518, 392), (518, 336), (518, 294), (518, 266), (518, 210), (518, 154), (392, 518), (336, 518), (294, 518), (266, 518)], 
+  transform=SeqColorJitter, num_views=${num_views}, n_corres=${n_corres_train})
+dataset2: WildRGBD_Multi(allow_repeat=${allow_repeat}, split='train', ROOT="../data/train/wildrgbd", 
+  aug_crop=16, resolution=[(518, 392), (518, 336), (518, 294), (518, 266), (518, 210), (518, 154), (392, 518), (336, 518), (294, 518), (266, 518)], 
+  transform=SeqColorJitter, num_views=${num_views}, n_corres=${n_corres_train})
+dataset3: ARKitScenes_Multi(allow_repeat=${allow_repeat}, split='train', ROOT='../data/train/processed_arkitscenes/', 
+  aug_crop=16, resolution=[(518, 392), (518, 336), (518, 294), (518, 266), (518, 210), (518, 154), (392, 518), (336, 518), (294, 518), (266, 518)], 
+  transform=SeqColorJitter, num_views=${num_views}, n_corres=${n_corres_train})
+dataset4: ARKitScenesHighRes_Multi(allow_repeat=${allow_repeat}, split='train', ROOT="../data/train/processed_arkitscenes_highres", 
+  aug_crop=16, resolution=[(518, 392), (518, 336), (518, 294), (518, 266), (518, 210), (518, 154), (392, 518), (336, 518), (294, 518), (266, 518)], 
+  transform=SeqColorJitter, num_views=${num_views}, n_corres=${n_corres_train})
+dataset5: ScanNetpp_Multi(allow_repeat=${allow_repeat}, split='train', ROOT="../data/train/processed_scannetpp/", 
+  aug_crop=16, resolution=[(518, 392), (518, 336), (518, 294), (518, 266), (518, 210), (518, 154), (392, 518), (336, 518), (294, 518), (266, 518)],  
+  transform=SeqColorJitter, num_views=${num_views}, n_corres=${n_corres_train})
+dataset6: ScanNet_Multi(allow_repeat=${allow_repeat}, split='train', ROOT="../data/train/processed_scannet/", 
+  aug_crop=16, resolution=[(518, 392), (518, 336), (518, 294), (518, 266), (518, 210), (518, 154), (392, 518), (336, 518), (294, 518), (266, 518)],  
+  transform=SeqColorJitter, num_views=${num_views}, n_corres=${n_corres_train})
+dataset7: HyperSim_Multi(allow_repeat=${allow_repeat}, split='train', ROOT="../data/train/hypersim", 
+  aug_crop=16, resolution=[(518, 392), (518, 336), (518, 294), (518, 266), (518, 210), (518, 154), (392, 518), (336, 518), (294, 518), (266, 518)],  
+  transform=SeqColorJitter, num_views=${num_views}, n_corres=${n_corres_train})
+dataset8: BlendedMVS_Multi(allow_repeat=${allow_repeat}, split='train', ROOT="../data/train/processed_blendedmvs/", 
+  aug_crop=16, resolution=[(518, 392), (518, 336), (518, 294), (518, 266), (518, 210), (518, 154), (392, 518), (336, 518), (294, 518), (266, 518)],  
+  transform=SeqColorJitter, num_views=${num_views}, n_corres=${n_corres_train})
+dataset9: MegaDepth_Multi(allow_repeat=${allow_repeat}, split="train", ROOT="../data/train/processed_megadepth", 
+  aug_crop=16, resolution=[(518, 392), (518, 336), (518, 294), (518, 266), (518, 210), (518, 154), (392, 518), (336, 518), (294, 518), (266, 518)],  
+  transform=SeqColorJitter, num_views=${num_views}, n_corres=${n_corres_train})
+dataset10: Waymo_Multi(allow_repeat=${allow_repeat}, split=None, ROOT="../data/train/waymo/", 
+  aug_crop=16, resolution=[(518, 392), (518, 336), (518, 294), (518, 266), (518, 210), (518, 154), (392, 518), (336, 518), (294, 518), (266, 518)],  
+  transform=SeqColorJitter, num_views=${num_views}, n_corres=${n_corres_train})
+dataset11: VirtualKITTI2_Multi(allow_repeat=${allow_repeat}, split=None, ROOT="../data/train/processed_vkitti", 
+  aug_crop=16, resolution=[(518, 392), (518, 336), (518, 294), (518, 266), (518, 210), (518, 154), (392, 518), (336, 518), (294, 518), (266, 518)],  
+  transform=SeqColorJitter, num_views=${num_views}, n_corres=${n_corres_train})
+dataset12: OmniObject3D_Multi(allow_repeat=${allow_repeat}, split=None, ROOT="../data/train/omniobject3d/",
+  aug_crop=16, resolution=[(518, 392), (518, 336), (518, 294), (518, 266), (518, 210), (518, 154), (392, 518), (336, 518), (294, 518), (266, 518)], 
+  transform=SeqColorJitter, num_views=${num_views}, n_corres=${n_corres_train})
+dataset13: Spring(allow_repeat=${allow_repeat}, split=None, ROOT="../data/train/spring/",
+  aug_crop=16, resolution=[(518, 392), (518, 336), (518, 294), (518, 266), (518, 210), (518, 154), (392, 518), (336, 518), (294, 518), (266, 518)], 
+  transform=SeqColorJitter, num_views=${num_views}, n_corres=${n_corres_train})
+dataset14: MVS_Synth_Multi(allow_repeat=${allow_repeat}, split='train', ROOT="../data/train/mvs_synth",
+  aug_crop=16, resolution=[(518, 392), (518, 336), (518, 294), (518, 266), (518, 210), (518, 154), (392, 518), (336, 518), (294, 518), (266, 518)], 
+  transform=SeqColorJitter, num_views=${num_views}, n_corres=${n_corres_train})
+dataset15: PointOdyssey_Multi(allow_repeat=${allow_repeat}, split='train', ROOT="../data/train/point_odyssey",
+  aug_crop=16, resolution=[(518, 392), (518, 336), (518, 294), (518, 266), (518, 210), (518, 154), (392, 518), (336, 518), (294, 518), (266, 518)], 
+  transform=SeqColorJitter, num_views=${num_views}, n_corres=${n_corres_train})
+
+train_dataset: 4500 @ ${dataset1} + 4500 @ ${dataset2} + 4500 @ ${dataset3} + 2250 @ ${dataset4} + 2250 @ ${dataset5} 
+              + 4500 @ ${dataset6} + 1200 @ ${dataset7} + 2250 @ ${dataset8} + 2250 @ ${dataset9} + 2250 @ ${dataset10} 
+              + 2250 @ ${dataset11} + 1800 @ ${dataset12} + 1800 @ ${dataset13} + 450 @ ${dataset14} + 2250 @ ${dataset15}
+test_dataset: 1000 @ ARKitScenes_Multi(split='test', ROOT='../data/train/processed_arkitscenes/', resolution=(518, 392), num_views=${num_test_views}, seed=42, n_corres=${n_corres_test})
+
+seed: 0
+batch_size: 1
+accum_iter: 1
+gradient_checkpointing: False
+epochs: 10
+start_epoch: 0
+start_step: 0
+weight_decay: 0.05
+lr: 1e-5
+min_lr: 1e-7
+warmup_epochs: 0.5
+amp: 1
+
+num_workers: 12
+world_size: 1
+local-rank: -1
+dist_url: 'env://'
+rank: 0
+gpu: 0
+distributed: False
+dist_backend: 'nccl'
+
+eval_freq: 1
+save_freq: 0.1
+max_checkpoints: 10
+keep_freq: 1
+print_freq: 10
+print_img_freq: 50000000
+num_imgs_vis: 4
+save_dir: '../checkpoints'
+exp_name: 'StreamVGGT_alpha0.1_lr1e-5_nog'
+task: 'StreamVGGT'
+logdir: ${save_dir}/${exp_name}/logs
+output_dir: ${save_dir}/${exp_name}/
+hydra:
+  verbose: True
+  run:
+    dir: ${save_dir}/${exp_name}
