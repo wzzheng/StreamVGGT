@@ -22,7 +22,7 @@ causal attention and leverages cached memory token to support efficient incremen
 
 ### Installation
 
-1. Clone Stream3R
+1. Clone StreamVGGT
 ```bash
 git clone https://github.com/wzzheng/StreamVGGT.git
 cd StreamVGGT
