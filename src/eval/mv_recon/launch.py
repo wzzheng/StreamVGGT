@@ -46,7 +46,7 @@ def get_args_parser():
 
 def main(args):
     add_path_to_dust3r(args.weights)
-    from eval.mv_recon.data import SevenScenes, NRGBD, ETH3D, DTU
+    from eval.mv_recon.data import SevenScenes, NRGBD
     from eval.mv_recon.utils import accuracy, completion
 
     if args.size == 512:
@@ -59,16 +59,6 @@ def main(args):
     else:
         raise NotImplementedError
     datasets_all = {
-        "ETH3D": ETH3D(
-            split="test",
-            ROOT="../data/eval/ETH3D",
-            resolution=resolution,
-            num_seq=1,
-            full_video=False,
-            num_frames=10,
-            kf_every=200,
-            shuffle_seed=22,
-        ),
         "7scenes": SevenScenes(
             split="test",
             ROOT="../data/eval/7scenes",
@@ -77,16 +67,6 @@ def main(args):
             full_video=True,
             kf_every=200,
         ),  # 20),
-        "DTU": DTU(
-            split="test",
-            ROOT="../data/eval/dtu_test",
-            resolution=resolution,
-            num_seq=1,
-            full_video=True,
-            num_frames=30,
-            kf_every=1,
-            random_seed=10,  
-        ),
         "NRGBD": NRGBD(
             split="test",
             ROOT="../data/eval/neural_rgbd",
@@ -109,10 +89,7 @@ def main(args):
         from copy import deepcopy
         model = StreamVGGT()
         ckpt = torch.load(args.weights, map_location=device)
-        state_dict = ckpt["model"]
-        new_state_dict = {k.replace('module.', ''): v for k, v in state_dict.items()}
-        model.load_state_dict(new_state_dict, strict=True)
-        # model.load_state_dict(ckpt, strict=True)
+        model.load_state_dict(ckpt, strict=True)
         model.eval()
         model = model.to("cuda")
     elif model_name == "VGGT":

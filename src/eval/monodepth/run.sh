@@ -1,10 +1,10 @@
 #!/bin/bash
 set -e
 
-workdir='../'
+workdir='..'
 model_name='StreamVGGT'
 ckpt_name='checkpoints'
-model_weights="../ckpt/${ckpt_name}.pth"
+model_weights="${workdir}/ckpt/${ckpt_name}.pth"
 datasets=('sintel' 'bonn' 'kitti' 'nyu')
 
 for data in "${datasets[@]}"; do

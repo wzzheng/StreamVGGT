@@ -2,10 +2,10 @@
 
 set -e
 
-workdir='../'
+workdir='..'
 model_name='streamvggt'
 ckpt_name='checkpoints'
-model_weights="${workdir}/ckpts/${ckpt_name}.pth"
+model_weights="${workdir}/ckpt/${ckpt_name}.pth"
 datasets=('sintel' 'bonn' 'kitti')
 
 for data in "${datasets[@]}"; do

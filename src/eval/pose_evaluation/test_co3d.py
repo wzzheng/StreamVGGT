@@ -211,6 +211,7 @@ def setup_args():
     parser.add_argument('--min_num_images', type=int, default=50, help='Minimum number of images for a sequence')
     parser.add_argument('--num_frames', type=int, default=10, help='Number of frames to use for testing')
     parser.add_argument('--co3d_dir', type=str, required=True, help='Path to CO3D dataset')
+    parser.add_argument('--co3d_anno_dir', type=str, required=True, help='Path to CO3D annotations')
     parser.add_argument('--seed', type=int, default=0, help='Random seed for reproducibility')
     return parser.parse_args()
 
@@ -254,29 +255,12 @@ def process_sequence(model, seq_name, seq_data, category, co3d_dir, min_num_imag
 
     metadata = []
     for data in seq_data:
-        filename = os.path.join(co3d_dir, category, seq_name, f"images/frame{data:06d}.npz")
-        file = np.load(filename)
-        pose = file["camera_pose"]
-        # extri_opencv = file["camera_pose"]
-        data_filepath = os.path.join(category, seq_name, f"images/frame{data:06d}.jpg")
-
-        # R = pose[:3, :3]  # 3×3
-        # t = pose[:3, 3]
-        # extri_opencv = np.hstack([R, t])  # 3×4  =>  [R | t]
-        
-        R_c2w = pose[:3, :3]
-        t_c2w = pose[:3, 3]
-
         # Make sure translations are not ridiculous
-        if t_c2w[0] + t_c2w[1] + t_c2w[2] > 1e5:
+        if data["T"][0] + data["T"][1] + data["T"][2] > 1e5:
             return None, None
-        R_w2c = R_c2w.T
-        t_w2c = - R_w2c @ t_c2w
-        extri_opencv = np.hstack([R_w2c, t_w2c[:, None]])
-
-        # extri_opencv = convert_pt3d_RT_to_opencv(R_w2c, t_w2c)
+        extri_opencv = convert_pt3d_RT_to_opencv(data["R"], data["T"])
         metadata.append({
-            "filepath": data_filepath,
+            "filepath": data["filepath"],
             "extri": extri_opencv,
         })
 
@@ -311,11 +295,6 @@ def process_sequence(model, seq_name, seq_data, category, co3d_dir, min_num_imag
         pred_se3 = torch.cat((pred_extrinsic, add_row), dim=1)
         gt_se3 = torch.cat((gt_extrinsic, add_row), dim=1)
   
-        # Set the coordinate of the first camera as the coordinate of the world
-        # NOTE: DO NOT REMOVE THIS UNLESS YOU KNOW WHAT YOU ARE DOING
-        # pred_se3 = align_to_first_camera(pred_se3)
-        # gt_se3 = align_to_first_camera(gt_se3)
-
         rel_rangle_deg, rel_tangle_deg = se3_to_relative_pose_error(pred_se3, gt_se3, num_frames)
         Racc_5 = (rel_rangle_deg < 5).float().mean().item()
         Tacc_5 = (rel_tangle_deg < 5).float().mean().item()
@@ -335,18 +314,11 @@ def main():
 
     # Load model
     model = StreamVGGT()
-    # model = VGGT()
     checkpoint_path = "../ckpt/checkpoints.pth"  # Path to the model checkpoint
     checkpoint = torch.load(checkpoint_path, map_location=device)
-    state_dict = checkpoint["model"]
-    del checkpoint
-    new_state_dict = {k.replace('module.', ''): v for k, v in state_dict.items()}
-    del state_dict
-    model.load_state_dict(new_state_dict, strict=True)
-    # model.load_state_dict(checkpoint, strict=True)
+    model.load_state_dict(checkpoint, strict=True)
     model.to(device).eval()
-    del new_state_dict
-    # del checkpoint
+    del checkpoint
     
 
     # Set random seeds
@@ -371,15 +343,28 @@ def main():
 
     for category in SEEN_CATEGORIES:
         print(f"Loading annotation for {category} test set")
-        annotation_file = os.path.join(args.co3d_dir, f"{category}/selected_seqs_test.json")
+        annotation_file = os.path.join(args.co3d_anno_dir, f"{category}_test.jgz")
 
-        with open(annotation_file, 'r', encoding='utf-8') as f:
-            annotation = json.load(f)
+        try:
+            with gzip.open(annotation_file, "r") as fin:
+                annotation = json.loads(fin.read())
+        except FileNotFoundError:
+            print(f"Annotation file not found for {category}, skipping")
+            continue
      
         rError = []
         tError = []
 
-        for seq_name, seq_data in annotation.items():
+        seq_names = sorted(list(annotation.keys()))
+        if args.fast_eval and len(seq_names)>=10:
+            seq_names = random.sample(seq_names, 10)
+        seq_names = sorted(seq_names)
+
+        print("Testing Sequences: ")
+        print(seq_names)
+
+        for seq_name in seq_names:
+            seq_data = annotation[seq_name]
             print("-" * 50)
             print(f"Processing {seq_name} for {category} test set")
             if args.debug and not os.path.exists(os.path.join(args.co3d_dir, category, seq_name)):

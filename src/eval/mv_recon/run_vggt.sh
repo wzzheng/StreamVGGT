@@ -1,10 +1,10 @@
 #!/bin/bash
 
 set -e
-workdir='../'
+workdir='..'
 model_name='VGGT'
 ckpt_name='model'
-model_weights="../ckpt/${ckpt_name}.pt"
+model_weights="${workdir}/ckpt/${ckpt_name}.pt"
 
 
 output_dir="${workdir}/eval_results/mv_recon/${model_name}_${ckpt_name}"

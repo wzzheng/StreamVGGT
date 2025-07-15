@@ -138,10 +138,7 @@ if __name__ == "__main__":
     from copy import deepcopy
     model = StreamVGGT()
     ckpt = torch.load(args.weights, map_location=args.device)
-    state_dict = ckpt["model"]
-    new_state_dict = {k.replace('module.', ''): v for k, v in state_dict.items()}
-    model.load_state_dict(new_state_dict, strict=True)
-    # model.load_state_dict(ckpt, strict=True)
+    model.load_state_dict(ckpt, strict=True)
     model.eval()
     model = model.to("cuda")
     del ckpt
