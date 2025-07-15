@@ -224,6 +224,12 @@ def train(args):
     if hasattr(model, 'aggregator') and hasattr(model.aggregator, 'register_token'):
         model.aggregator.register_token.requires_grad = False
 
+    model.camera_head.requires_grad = False
+    model.depth_head.requires_grad = False
+    model.track_head.requires_grad = False
+
+    
+
 
     for name, p in model.named_parameters():
         if not p.requires_grad:

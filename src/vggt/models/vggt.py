@@ -75,10 +75,10 @@ class VGGT(nn.Module, PyTorchModelHubMixin):
         if query_points is not None and len(query_points.shape) == 2:
             query_points = query_points.unsqueeze(0)
         
+        aggregated_tokens_list, patch_start_idx = self.aggregator(images)
+        predictions = {}
+
         with torch.cuda.amp.autocast(enabled=False):
-            aggregated_tokens_list, patch_start_idx = self.aggregator(images)
-            predictions = {}
-   
             if self.camera_head is not None:
                 pose_enc_list = self.camera_head(aggregated_tokens_list)
                 predictions["pose_enc"] = pose_enc_list[-1]  # pose encoding of the last iteration
@@ -116,7 +116,7 @@ class VGGT(nn.Module, PyTorchModelHubMixin):
                     'depth': predictions['depth'][:, s],  # [B, H, W, 1]
                     'depth_conf': predictions['depth_conf'][:, s],  # [B, H, W]
 
-                    'camera_pose': predictions['pose_enc'][:, s, :],  # [B, 9]
+                    'camera_pose': predictions['pose_enc'][:, s, :7],  # [B, 7]
 
                     **({'valid_mask': views[s]["valid_mask"]}
                         if 'valid_mask' in views[s] else {}),  # [B, H, W]
