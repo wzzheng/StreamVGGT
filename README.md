@@ -20,7 +20,7 @@
 Given a sequence of images, unlike offline models that require reprocessing the entire sequence and reconstructing the entire scene upon receiving each new image, our StreamVGGT employs temporal
 causal attention and leverages cached memory token to support efficient incremental on-the-fly reconstruction, enabling interative and real-time online applitions.
 
-<img src="./img/teaser.png" alt="overview" style="width: 100%;" />
+<img src="./assets/teaser_v2_01.png" alt="overview" style="width: 100%;" />
 
 
 ## Acknowledgements
