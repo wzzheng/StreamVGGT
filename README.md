@@ -12,15 +12,15 @@
 **StreamVGGT**, a causal transformer architecture for **real-time streaming 4D visual geometry perception** using implicit historical-token memory, delivers both fast inference and high-quality 4D reconstruction.
 
 ## News
+- **[2025/7/15]** StreamVGGT training/evaluation code and VGGT finetuning code release.
 - **[2025/7/14]** Check out [Point3R](https://github.com/YkiWu/Point3R) for another streaming 3D reconstruction work of ours!
-- **[2025/7/14]** StreamVGGT training/evaluation code and VGGT finetuning code release.
 
 ## Overview
 
 Given a sequence of images, unlike offline models that require reprocessing the entire sequence and reconstructing the entire scene upon receiving each new image, our StreamVGGT employs temporal
 causal attention and leverages cached memory token to support efficient incremental on-the-fly reconstruction, enabling interative and real-time online applitions.
 
-<img src="./assets/teaser_v2_01.png" alt="overview" style="width: 100%;" />
+<img src="./img/teaser.png" alt="overview" style="width: 100%;" />
 
 
 ## Acknowledgements
