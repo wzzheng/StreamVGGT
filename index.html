@@ -1,0 +1,230 @@
+<!doctype html>
+<html>
+<head>
+<title>StreamVGGT</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"> -->
+<link href="bootstrap.min.css" rel="stylesheet">
+<!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script> -->
+<!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet"> -->
+<link href="opensans.css" rel="stylesheet">
+<link rel="icon" href="images/logo3.png">
+<link href="style.css" rel="stylesheet">
+<style>
+  .container_2{
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+}
+.video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+  .collapsible {
+    background-color: #777;
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+  }
+
+  .active, .collapsible:hover {
+    background-color: #555;
+  }
+  
+  .content {
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    background-color: #f1f1f1;
+  }
+</style>
+
+<style>
+.paperthumb {
+  float:left; width: 120px; margin: 3px 10px 7px 0;
+}
+.paperdesc {
+  clear: both;
+}
+</style>
+</head>
+
+<body class="nd-docs">
+<div class="nd-pageheader">
+ <div class="container">
+ <p class="lead" style="font-size:30px">
+    <b><a href="https://arxiv.org/abs/2507.02863">StreamVGGT: Streaming 4D Visual Geometry Transformer </a></b>
+  <address style="font-size: 110%;">
+    <nobr>Dong Zhuo<sup>*</sup>,</nobr>
+    <nobr><a href="https://wzzheng.net/">Wenzhao Zheng</a><sup>*, †</sup>,</nobr>
+    <nobr>Jiahe Guo,</nobr>
+    <nobr>Yuqi Wu,</nobr>
+    <nobr><a href="https://scholar.google.com/citations?user=6a79aPwAAAAJ&hl=en">Jie Zhou</a>,</nobr>
+    <nobr><a href="http://ivg.au.tsinghua.edu.cn/Jiwen_Lu/">Jiwen Lu</a>
+  <br>
+      <nobr>Tsinghua University</nobr>
+  </address>
+  <address style="font-size: 120%;">
+	 <!-- <br> -->
+  [<a href="https://arxiv.org/abs/2507.02863"><b>Paper (Arxiv)</b></a>]&nbsp;&nbsp;&nbsp;&nbsp;
+  <!-- [<a href="https://www.youtube.com/">Video(Youtube)</a>]&nbsp;&nbsp;&nbsp;&nbsp; -->
+  [<a href="https://github.com/wzzheng/StreamVGGT"><b>Code (GitHub)</b></a>]&nbsp;&nbsp;&nbsp;&nbsp;
+  <!-- [<a href="https://zhuanlan.zhihu.com">Post(Zhihu)</a>] -->
+  </address>
+<!--   <small>† Project Leader. ‡Corresponding author.</small> -->
+  <small>*Equal contributions. <sup>†</sup>Project Leader.</small>
+ </div>
+ </p>
+ </div>
+</div> <!-- end nd-pageheader -->
+
+<div class="container">
+
+
+<!-- <p align="center">
+  <video width="90%" controls>
+    <source src="vid/final_demo.mp4" type="video/mp4">
+  </video>
+</p> -->
+
+<p align="center">
+    <img src="img/teaser.png" width="90%">
+</p>
+<p><b>Overview of our contributions.</b> 
+We propose StreamVGGT, a novel causal transformer architecture specifically designed for efficient, real-time streaming 4D visual geometry reconstruction. Given a sequence of images, unlike offline models that require reprocessing the entire sequence and reconstructing the entire scene upon receiving each new image, our StreamVGGT employs temporal causal attention and leverages cached memory token to support efficient incremental on-the-fly reconstruction, enabling interative and real-time online applitions.
+</p>
+
+<style>
+  .flex-container {
+    display: flex;
+    justify-content: flex-start; 
+    align-items: flex-start;
+  }
+  .flex-container p {
+    margin-left: 20px;
+  }
+</style>
+
+<h2>Overall Framework of StreamVGGT</h2><hr>
+<p> 
+  Our model consists of three main components: an image encoder, a spatio-temporal decoder, and multi-task prediction heads. During training, we utilize full-sequence inputs to provide the model with complete contextual information. To enforce temporal causality, we apply causal attention so the model can only attend to past frames at any given time step. This design encourages temporal modeling suitable for streaming inference.
+<p>
+
+<p align="center">
+     <img src="img/framework.png" width="90%">
+</p>
+
+<p> 
+  During streaming inference, we cache the historical keys and values as implicit memory to store information from past frames. This memory allows the model to efficiently reuse previously computed representations, avoiding redundant computation and enabling consistent contextual understanding across time.
+<p>
+
+<p align="center">
+     <img src="img/inference.png" width="90%">
+</p>
+
+<h2>Results</h2><hr>
+
+<h4>3D Reconstruction</h4><hr>
+
+We evaluate the 3D reconstruction performance of StreamVGGT on 7-Scenes and NRGBD.
+Our method performs competitively when compared with existing streaming approaches and even surpasses the current state-of-the-art streaming model on several metrics.
+<p></p>
+
+<p align="center">
+  <img src="img/3drecon.png" width="90%">
+</p>
+
+
+<h4>Monocular Depth Estimation</h4><hr>
+
+We conduct evaluations of single-frame depth estimation across four datasets: KITTI, Sintel, Bonn, and NYU-v2, encompassing both dynamic/static scenes and indoor/outdoor environments.
+our method not only matches the overall best performers but also outperforms the current state-of-the-art streaming model on all datasets.
+
+<p></p>
+
+<p align="center">
+  <img src="img/single.png" width="90%">
+</p>
+
+<h4>Video Depth Estimation</h4><hr>
+
+We conduct video depth estimation by assessing both the depth quality on a perframe basis and the consistency of depth across frames.
+Under aligned settings, our StreamVGGT exceeds SOTA streaming model on both the Sintel and Bonn benchmarks and attains performance comparable to the offline VGGT.
+
+<p></p>
+
+<p align="center">
+  <img src="img/video.png" width="90%">
+</p>
+
+<h4>Visualizations</h4><hr>
+
+We provide 3D reconstruction visualizations from StreamVGGT and CUT3R, enabling a clear qualitative comparison.
+
+<p></p>
+
+<p align="center">
+  <img src="img/Visualization.png" width="90%">
+</p>
+
+
+
+<p>
+<div class="card">
+<h3 class="card-header">Bibtex</h3>
+<div class="card-block">
+<pre class="card-text clickselect">
+	@article{point3r,
+	      title={Point3R: Streaming 3D Reconstruction with Explicit Spatial Pointer Memory}, 
+	      author={Yuqi Wu and Wenzhao Zheng and Jie Zhou and Jiwen Lu},
+	      journal={arXiv preprint arXiv:2507.02863},
+	      year={2025}
+	}
+</pre>
+</div>
+</div>
+</p>
+
+
+<p align="right">
+     <a href="https://hanlab.mit.edu/projects/anycost-gan/">Website Template</a>
+</p>
+
+</div>
+</div> <!-- row -->
+
+</div> <!-- container -->
+
+<script>
+  var coll = document.getElementsByClassName("collapsible");
+  var i;
+  
+  for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var content = this.nextElementSibling;
+      if (content.style.maxHeight){
+        content.style.maxHeight = null;
+      } else {
+        content.style.maxHeight = content.scrollHeight * 50+ "px";
+      } 
+      content.style.height = "550%";
+    });
+  }
+</script>
+
+</body>
+</html>
+
+
