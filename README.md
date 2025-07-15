@@ -2,6 +2,8 @@
 <h1>StreamVGGT: Streaming 4D Visual Geometry Transformer</h1>
 </div>
 
+### [Paper](https://arxiv.org/abs/2507.02863)  | [Project Page](https://wzzheng.net/) 
+
 >StreamVGGT: Streaming 4D Visual Geometry Transformer
 
 >Dong Zhuo<sup>\*</sup>, [Wenzhao Zheng](https://wzzheng.net/)<sup>*</sup>$\dagger$,  Jiahe Guo, Yuqi Wu, [Jie Zhou](https://scholar.google.com/citations?user=6a79aPwAAAAJ&hl=en&authuser=1), [Jiwen Lu](http://ivg.au.tsinghua.edu.cn/Jiwen_Lu/)
@@ -9,11 +11,14 @@
 <sup>*</sup> Equal contribution. $\dagger$ Project leader.
 
 
-**StreamVGGT**, a causal transformer architecture for **real-time streaming 4D visual geometry perception** using implicit historical-token memory, delivers both fast inference and high-quality 4D reconstruction.
+**StreamVGGT**, a causal transformer architecture for **real-time streaming 4D visual geometry perception** compatiable with LLM-targeted attention mechanism (e.g., [FlashAttention](https://github.com/Dao-AILab/flash-attention)), delivers both fast inference and high-quality 4D reconstruction.
 
 ## News
-- **[2025/7/14]** Check out [Point3R](https://github.com/YkiWu/Point3R) for another streaming 3D reconstruction work of ours!
-- **[2025/7/14]** StreamVGGT training/evaluation code and VGGT finetuning code release.
+
+- **[2025/7/13]** Check out [Point3R](https://github.com/YkiWu/Point3R) for another streaming 3D reconstruction work of ours!
+- **[2025/7/13]** Distilation code for VGGT is released.
+- **[2025/7/13]** Inference code with [FlashAttention-2](https://github.com/Dao-AILab/flash-attention) is released.
+- **[2025/7/13]** Training/evaluation code release.
 
 ## Overview
 
@@ -22,7 +27,9 @@ causal attention and leverages cached memory token to support efficient incremen
 
 <img src="./assets/teaser_v2_01.png" alt="overview" style="width: 100%;" />
 
-## Getting Started
+### On-the-Fly Online Reonstruction from Streaming Inputs
+
+<img src="./assets/results.png" alt="overview" style="width: 100%;" />
 
 ### Installation
 
@@ -69,7 +76,7 @@ Our training data includes 14 datasets, please download the datasets from their 
   - [PointOdyssey](https://pointodyssey.com/)
 
 ### Evaluation Datasets
-Please refer to [MonST3R](https://github.com/Junyi42/monst3r/blob/main/data/evaluation_script.md) and [Spann3R](https://github.com/HengyiWang/spann3r/blob/main/docs/data_preprocess.md) to prepare Sintel, Bonn, KITTI, NYU-v2, ScanNet, 7scenes and Neural-RGBD datasets
+Please refer to [MonST3R](https://github.com/Junyi42/monst3r/blob/main/data/evaluation_script.md) and [Spann3R](https://github.com/HengyiWang/spann3r/blob/main/docs/data_preprocess.md) to prepare Sintel, Bonn, KITTI, NYU-v2, ScanNet, 7scenes and Neural-RGBD datasets.
 
 ## Folder Structure
 The overall folder structure should be organized as follow：
@@ -158,17 +165,23 @@ python eval/pose_evaluation/test_co3d.py --co3d_dir /YOUR/CO3D/PATH --co3d_anno_
 ## Acknowledgements
 Our code is based on the following brilliant repositories:
 
-- [DUSt3R](https://github.com/naver/dust3r)
-- [MonST3R](https://github.com/Junyi42/monst3r.git)
-- [Spann3R](https://github.com/HengyiWang/spann3r.git)
-- [CUT3R](https://github.com/CUT3R/CUT3R)
-- [VGGT](https://github.com/facebookresearch/vggt)
+[DUSt3R](https://github.com/naver/dust3r)
+[MonST3R](https://github.com/Junyi42/monst3r.git)
+[Spann3R](https://github.com/HengyiWang/spann3r.git)
+[CUT3R](https://github.com/CUT3R/CUT3R)
+[VGGT](https://github.com/facebookresearch/vggt)
+[Point3R](https://github.com/YkiWu/Point3R)
 
 Many thanks to these authors!
 
-<!-- ## Citation -->
-<!-- 
+## Citation
+
 If you find this project helpful, please consider citing the following paper:
 ```
-
-``` -->
+@article{streamVGGT,
+      title={Streaming 4D Visual Geometry Transformer}, 
+      author={Dong Zhuo and Wenzhao Zheng and Jiahe Guo and Yuqi Wu and Jie Zhou and Jiwen Lu},
+      journal={arXiv preprint arXiv:2507.},
+      year={2025}
+}
+```
