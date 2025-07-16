@@ -15,6 +15,7 @@
 
 ## News
 
+- **[2025/7/15]** Paper released on [arXiv](https://arxiv.org/abs/2507.11539).
 - **[2025/7/13]** Check out [Point3R](https://github.com/YkiWu/Point3R) for another streaming 3D reconstruction work of ours!
 - **[2025/7/13]** Distilation code for VGGT is released.
 - **[2025/7/13]** Inference code with [FlashAttention-2](https://github.com/Dao-AILab/flash-attention) is released.
