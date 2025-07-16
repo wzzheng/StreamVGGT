@@ -182,7 +182,7 @@ If you find this project helpful, please consider citing the following paper:
 @article{streamVGGT,
       title={Streaming 4D Visual Geometry Transformer}, 
       author={Dong Zhuo and Wenzhao Zheng and Jiahe Guo and Yuqi Wu and Jie Zhou and Jiwen Lu},
-      journal={arXiv preprint arXiv:2507.},
+      journal={arXiv preprint arXiv:2507.11539},
       year={2025}
 }
 ```
