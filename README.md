@@ -1,10 +1,10 @@
 <div align="center">
-<h1>StreamVGGT: Streaming 4D Visual Geometry Transformer</h1>
+<h1>Streaming 4D Visual Geometry Transformer</h1>
 </div>
 
 ### [Paper](https://arxiv.org/abs/2507.11539)  | [Project Page](https://wzzheng.net/StreamVGGT) 
 
->StreamVGGT: Streaming 4D Visual Geometry Transformer
+>Streaming 4D Visual Geometry Transformer
 
 >Dong Zhuo<sup>\*</sup>, [Wenzhao Zheng](https://wzzheng.net/)<sup>*</sup>$\dagger$,  Jiahe Guo, Yuqi Wu, [Jie Zhou](https://scholar.google.com/citations?user=6a79aPwAAAAJ&hl=en&authuser=1), [Jiwen Lu](http://ivg.au.tsinghua.edu.cn/Jiwen_Lu/)
 
