@@ -16,8 +16,9 @@
 ## News
 
 - **[2025/7/15]** Paper released on [arXiv](https://arxiv.org/abs/2507.11539).
+- **[2025/7/14]** Release the code for **fine-tuning VGGT**.
 - **[2025/7/13]** Check out [Point3R](https://github.com/YkiWu/Point3R) for another streaming 3D reconstruction work of ours!
-- **[2025/7/13]** Distilation code for VGGT is released.
+- **[2025/7/13]** Distillation code for VGGT is released.
 - **[2025/7/13]** Inference code with [FlashAttention-2](https://github.com/Dao-AILab/flash-attention) is released.
 - **[2025/7/13]** Training/evaluation code release.
 
@@ -28,7 +29,7 @@ causal attention and leverages cached memory token to support efficient incremen
 
 <img src="./assets/teaser_v2_01.png" alt="overview" style="width: 100%;" />
 
-### On-the-Fly Online Reonstruction from Streaming Inputs
+### On-the-Fly Online Reconstruction from Streaming Inputs
 
 <img src="./assets/results.png" alt="overview" style="width: 100%;" />
 
@@ -59,7 +60,7 @@ The checkpoint of StreamVGGT is also available [here](https://cloud.tsinghua.edu
 
 ## Data Preparation
 ### Training Datasets
-Our training data includes 14 datasets, please download the datasets from their official sources and refer to [CUT3R](https://github.com/CUT3R/CUT3R/blob/main/docs/preprocess.md) for processing these datasets.
+Our training data includes 14 datasets. Please download the datasets from their official sources and refer to [CUT3R](https://github.com/CUT3R/CUT3R/blob/main/docs/preprocess.md) for processing these datasets.
 
   - [ARKitScenes](https://github.com/apple/ARKitScenes) 
   - [BlendedMVS](https://github.com/YoYo000/BlendedMVS)
@@ -80,7 +81,7 @@ Our training data includes 14 datasets, please download the datasets from their 
 Please refer to [MonST3R](https://github.com/Junyi42/monst3r/blob/main/data/evaluation_script.md) and [Spann3R](https://github.com/HengyiWang/spann3r/blob/main/docs/data_preprocess.md) to prepare Sintel, Bonn, KITTI, NYU-v2, ScanNet, 7scenes and Neural-RGBD datasets.
 
 ## Folder Structure
-The overall folder structure should be organized as follow：
+The overall folder structure should be organized as follows：
 ```
 StreamVGGT
 ├── ckpt/
@@ -104,7 +105,14 @@ StreamVGGT
     ├── ...
 ```
 
-## Training
+## Finetuning VGGT
+We also provide the following commands to fine-tune VGGT's point head if you like. 
+```bash
+cd src/
+NCCL_DEBUG=TRACE TORCH_DISTRIBUTED_DEBUG=DETAIL HYDRA_FULL_ERROR=1 accelerate launch --multi_gpu --main_process_port 26902 ./finetune.py --config-name finetune
+```
+
+## Training StreamVGGT
 We provide the following commands for training.
 
 ```bash
@@ -112,12 +120,6 @@ cd src/
 NCCL_DEBUG=TRACE TORCH_DISTRIBUTED_DEBUG=DETAIL HYDRA_FULL_ERROR=1 accelerate launch --multi_gpu --main_process_port 26902 ./train.py --config-name train
 ```
 
-## Finetuning
-We also provide the following commands to finetune VGGT's point head. 
-```bash
-cd src/
-NCCL_DEBUG=TRACE TORCH_DISTRIBUTED_DEBUG=DETAIL HYDRA_FULL_ERROR=1 accelerate launch --multi_gpu --main_process_port 26902 ./finetune.py --config-name finetune
-```
 ## Evaluation
 The evaluation code follows [MonST3R](https://github.com/Junyi42/monst3r/blob/main/data/evaluation_script.md), [CUT3R](https://github.com/CUT3R/CUT3R/blob/main/docs/eval.md) and [VGGT](https://github.com/facebookresearch/vggt).
 
@@ -160,7 +162,6 @@ cd ..
 ```bash
 python eval/pose_evaluation/test_co3d.py --co3d_dir /YOUR/CO3D/PATH --co3d_anno_dir /YOUR/CO3D/ANNO/PATH --seed 0
 ```
-
 
 
 ## Acknowledgements
