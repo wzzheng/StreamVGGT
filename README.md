@@ -15,7 +15,7 @@
 
 ## News
 
-- **[2025/7/18]** [Demo space](https://huggingface.co/spaces/lch01/StreamVGGT) and [model checkpoints](https://huggingface.co/lch01/StreamVGGT/) released on Hugging Face; demo code is available for local launch.
+- **[2025/7/18]** [Demo](https://huggingface.co/spaces/lch01/StreamVGGT) and [checkpoints](https://huggingface.co/lch01/StreamVGGT/) released on Hugging Face; demo code is available for local launch.
 - **[2025/7/15]** Paper released on [arXiv](https://arxiv.org/abs/2507.11539).
 - **[2025/7/14]** Release the code for **fine-tuning VGGT**.
 - **[2025/7/13]** Check out [Point3R](https://github.com/YkiWu/Point3R) for another streaming 3D reconstruction work of ours!
