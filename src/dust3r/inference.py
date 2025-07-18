@@ -101,7 +101,7 @@ def loss_of_one_batch(
 
         if teacher is not None:
             with torch.no_grad():
-                knowledge = teacher(batch, query_pts)
+                knowledge = teacher.inference(batch, query_pts)
                 gts, batch = knowledge.ress, knowledge.views
 
             with torch.cuda.amp.autocast(enabled=False):
