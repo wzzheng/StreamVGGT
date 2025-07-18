@@ -55,7 +55,7 @@ conda install 'llvm-openmp<16'
 ### Download Checkpoints
 Please download pretrained teacher model from [here](https://huggingface.co/facebook/VGGT-1B/blob/main/model.pt).
 
-The checkpoint of StreamVGGT is also available [here](https://huggingface.co/lch01/StreamVGGT/).
+The checkpoint of StreamVGGT is also available at both [Hugging Face](https://huggingface.co/lch01/StreamVGGT/) and [Tsinghua cloud](https://cloud.tsinghua.edu.cn/d/d6ad8f36fcd541bcb246/).
 
 
 ## Data Preparation
