@@ -39,7 +39,9 @@ def make_sincos_pos_embed(embed_dim: int, pos: torch.Tensor, omega_0: float = 10
     - emb: The generated 1D positional embedding.
     """
     assert embed_dim % 2 == 0
-    omega = torch.arange(embed_dim // 2, dtype=torch.double, device=pos.device)
+    # Use float32 instead of double for MPS compatibility
+    dtype = torch.float32 if pos.device.type == 'mps' else torch.double
+    omega = torch.arange(embed_dim // 2, dtype=dtype, device=pos.device)
     omega /= embed_dim / 2.0
     omega = 1.0 / omega_0**omega  # (D/2,)
 
