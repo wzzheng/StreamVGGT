@@ -102,16 +102,6 @@ MeTRIC
 ## Evaluation
 TODO: add eval scripts
 
-
-## Demo
-We provide a demo for StreamVGGT, based on the demo code from [VGGT](https://github.com/facebookresearch/vggt). You can follow the instructions below to launch it locally or try it out directly on [Hugging Face](https://huggingface.co/spaces/lch01/StreamVGGT).
-```bash
-pip install -r requirements_demo.txt
-python demo_gradio.py
-```
-
-**Note**: While StreamVGGT typically reconstructs a scene in under one second, 3D point visualization may take much longer due to slower third-party rendering.
-
 ## Acknowledgements
 Our code is based on the following repositories:
 
